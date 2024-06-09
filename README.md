@@ -6,6 +6,10 @@ We basically start from an empty file and work our way to a reproduction of the 
 
 Once the video comes out, this will also be a place for FAQ, and a place for fixes and errata, of which I am sure there will be a number :)
 
+For discussions and questions, please use [Discussions tab](https://github.com/karpathy/build-nanogpt/discussions), and for faster communication, have a look at my [Zero To Hero Discord](https://discord.gg/3zy8kqD9Cp):
+
+[![](https://dcbadge.vercel.app/api/server/3zy8kqD9Cp?compact=true&style=flat)](https://discord.gg/3zy8kqD9Cp)
+
 ## Video
 
 [![Build nanoGPT Video Lecture]()
