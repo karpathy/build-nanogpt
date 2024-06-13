@@ -382,6 +382,7 @@ for step in range(max_steps):
             if step > 0 and (step % int(max_steps*0.1) == 0 or last_step):
                 # optionally write model checkpoints
                 checkpoint_path = os.path.join(log_dir, f"model_{step:05d}.pt")
+                print(f"writing checkpoint to {checkpoint_path}")
                 checkpoint = {
                     'model': raw_model.state_dict(),
                     'config': raw_model.config,
@@ -398,7 +399,7 @@ for step in range(max_steps):
         num_return_sequences = 4
         max_length = 32
         # hard code some val data
-        tokens = [9999, 547, 426, 2825, 1441, 2209, 1300, 161, 9999, 1646]
+        tokens = [4097, 547, 426, 2825, 1441, 2209, 1300, 161, 4097, 1646]
         tokens = torch.tensor(tokens, dtype=torch.long)
         tokens = tokens.unsqueeze(0).repeat(num_return_sequences, 1)
         xgen = tokens.to(device)
