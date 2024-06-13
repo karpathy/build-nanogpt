@@ -299,8 +299,8 @@ if torch.cuda.is_available():
 # B = 64 # micro batch size
 # T = 1024 # sequence length
 
-total_batch_size = 2048*128
-B = 16 # micro batch size
+total_batch_size = 2048*32
+B = 32 # micro batch size
 T = 2048 # sequence length
 
 assert total_batch_size % (B * T * ddp_world_size) == 0, "make sure total_batch_size is divisible by B * T * ddp_world_size"
