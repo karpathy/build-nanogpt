@@ -154,7 +154,7 @@ class SpeechTokenizer():
     # of (1, T)
     def decode(self, tokens):
         # take -1 to remove the end seperator.
-        raw = [self.reconstruct_single_tensors(x[:-1]) for x in tokens]
+        raw = [self.reconstruct_single_tensors(x) for x in tokens]
         coarse = torch.cat([raw[i][0] for i in range(len(raw))]).to(self.device)
         fine = torch.cat([raw[i][1] for i in range(len(raw))]).to(self.device)
         finer = torch.cat([raw[i][2] for i in range(len(raw))]).to(self.device)
