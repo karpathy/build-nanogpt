@@ -1,0 +1,7 @@
+snac
+soundfile
+torch
+torchaudio
+numpy
+tqdm
+huggingface_hub
