@@ -327,7 +327,7 @@ raw_model = model.module if ddp else model # always contains the "raw" unwrapped
 
 max_lr = 0.0018
 min_lr = max_lr * 0.1
-max_steps = 10000 # 850 = 10 epochs # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
+max_steps = 100000 # 850 = 10 epochs # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
 warmup_steps = int(max_steps*0.1)
 def get_lr(it):
     # 1) linear warmup for warmup_iters steps
