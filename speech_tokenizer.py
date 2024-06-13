@@ -9,7 +9,7 @@ class SpeechTokenizer():
         self.sample_rate = 24000
         self.device = device
 
-    def flatten_tensors(self, tensors, seperator=9999):
+    def flatten_tensors(self, tensors, seperator=4097):
         """Safely flattens a list of tensors into a flat list of integers."""
         flattened = []
 
@@ -48,7 +48,7 @@ class SpeechTokenizer():
         return flattened
 
 
-    def reconstruct_single_tensors(self, flattened_output, seperator=9999):
+    def reconstruct_single_tensors(self, flattened_output, seperator=4097):
         """Reconstructs the list of tensors from the flattened output."""
 
         def count_elements_between_hashes(lst):

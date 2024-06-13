@@ -70,7 +70,7 @@ class Block(nn.Module):
 @dataclass
 class GPTConfig:
     block_size: int = 2048 # max sequence length
-    vocab_size: int = 4096 +  1 # number of tokens: 50,000 BPE merges + 256 bytes tokens + 1 <|endoftext|> token
+    vocab_size: int = 4097 # number of tokens: 50,000 BPE merges + 256 bytes tokens + 1 <|endoftext|> token
     n_layer: int = 12 # number of layers
     n_head: int = 12 # number of heads
     n_embd: int = 768 # embedding dimension
@@ -315,7 +315,7 @@ val_loader = DataLoaderLite(B=B, T=T, process_rank=ddp_rank, num_processes=ddp_w
 torch.set_float32_matmul_precision('high')
 
 # create model
-model = GPT(GPTConfig(vocab_size=50304))
+model = GPT(GPTConfig())
 # model = GPT.from_pretrained("gpt2") # or init from OpenAI GPT-2
 model.to(device)
 use_compile = False # torch.compile interferes with HellaSwag eval and Generation. TODO fix
@@ -398,7 +398,7 @@ for step in range(max_steps):
         num_return_sequences = 4
         max_length = 32
         # hard code some val data
-        tokens = [9999, 547, 426, 2825, 1441, 2209, 1300, 161, 9999, 1646, 3418, 1667, 874, 2156, 1337, 883, 9999, 717, 4081, 1667, 2030, 2110, 429, 953, 9999, 717, 1029, 429, 4009, 690, 2486, 3909, 9999, 3718, 1404, 1667, 3203, 1604, 1441, 883, 9999, 3919, 2209, 3830, 3741, 2918, 2202, 2175, 9999, 456, 318, 2544, 2024, 1874, 3246, 1747, 9999, 2962, 3069, 940, 685, 511, 3978, 484, 9999, 4056, 2450, 1926, 105, 782, 518, 2308, 9999, 1212, 863, 3777, 731, 3343, 3764, 1216, 9999, 1792, 124, 2744, 251, 3822, 1900, 125, 9999, 2439, 455, 3684, 2570, 915, 158, 1234, 9999, 3278, 2085, 2068, 2531, 2842, 2388, 3666, 9999, 1482, 1635, 801, 2920, 1978, 2866, 2934, 9999, 3563, 1713, 1069, 3393, 3740, 3070, 583, 9999, 2622, 500, 2265, 2101, 1723, 1286, 3685]
+        tokens = [9999, 547, 426, 2825, 1441, 2209, 1300, 161, 9999, 1646]
         tokens = torch.tensor(tokens, dtype=torch.long)
         tokens = tokens.unsqueeze(0).repeat(num_return_sequences, 1)
         xgen = tokens.to(device)
