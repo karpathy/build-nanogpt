@@ -4,3 +4,4 @@ tiny-sherlock-audio/*
 data/*
 __pycache__
 log
+pretrained
