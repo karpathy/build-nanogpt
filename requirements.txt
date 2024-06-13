@@ -1,0 +1,6 @@
+snac
+soundfile
+torch
+torchaudio
+numpy
+tqdm

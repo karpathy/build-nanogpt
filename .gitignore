@@ -1,0 +1,6 @@
+
+.DS_Store
+adventures_sherlock_holmes_rg_librivox/*
+data/*
+__pycache__
+log
