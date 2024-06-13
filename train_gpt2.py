@@ -318,7 +318,7 @@ torch.set_float32_matmul_precision('high')
 model = GPT(GPTConfig())
 # model = GPT.from_pretrained("gpt2") # or init from OpenAI GPT-2
 model.to(device)
-use_compile = False # torch.compile interferes with HellaSwag eval and Generation. TODO fix
+use_compile = True # torch.compile interferes with HellaSwag eval and Generation. TODO fix
 if use_compile:
     model = torch.compile(model)
 if ddp:
