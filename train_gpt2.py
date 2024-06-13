@@ -299,8 +299,8 @@ if torch.cuda.is_available():
 # B = 64 # micro batch size
 # T = 1024 # sequence length
 
-total_batch_size = 2048*16
-B = 2 # micro batch size
+total_batch_size = 2048*32
+B = 8 # micro batch size
 T = 2048 # sequence length
 
 assert total_batch_size % (B * T * ddp_world_size) == 0, "make sure total_batch_size is divisible by B * T * ddp_world_size"
@@ -379,7 +379,7 @@ for step in range(max_steps):
             print(f"validation loss: {val_loss_accum.item():.4f}")
             with open(log_file, "a") as f:
                 f.write(f"{step} val {val_loss_accum.item():.4f}\n")
-            if step > 0 and (step % int(max_steps*0.1) == 0 or last_step):
+            if step >= 0 and ((step % 25 == 0) or last_step):
                 # optionally write model checkpoints
                 checkpoint_path = os.path.join(log_dir, f"model_{step:05d}.pt")
                 print(f"writing checkpoint to {checkpoint_path}")
