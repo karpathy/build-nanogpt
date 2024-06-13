@@ -327,7 +327,7 @@ raw_model = model.module if ddp else model # always contains the "raw" unwrapped
 
 max_lr = 0.0018
 min_lr = max_lr * 0.1
-max_steps = 850 # 850 = 10 epochs # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
+max_steps = 10000 # 850 = 10 epochs # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
 warmup_steps = int(max_steps*0.1)
 def get_lr(it):
     # 1) linear warmup for warmup_iters steps
@@ -379,7 +379,7 @@ for step in range(max_steps):
             print(f"validation loss: {val_loss_accum.item():.4f}")
             with open(log_file, "a") as f:
                 f.write(f"{step} val {val_loss_accum.item():.4f}\n")
-            if step >= 0 and ((step % 25 == 0) or last_step):
+            if step >= 0 and ((step % 100 == 0) or last_step):
                 # optionally write model checkpoints
                 checkpoint_path = os.path.join(log_dir, f"model_{step:05d}.pt")
                 print(f"writing checkpoint to {checkpoint_path}")
@@ -394,7 +394,7 @@ for step in range(max_steps):
                 torch.save(checkpoint, checkpoint_path)
 
     # once in a while generate from the model (except step 0, which is noise)
-    if ((step >= 0 and step % 25 == 0) or last_step) and (not use_compile):
+    if ((step >= 0 and step % 100 == 0) or last_step) and (not use_compile):
         model.eval()
         num_return_sequences = 4
         max_length = 32
