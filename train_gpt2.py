@@ -6,7 +6,6 @@ from dataclasses import dataclass
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-from hellaswag import render_example, iterate_examples
 # -----------------------------------------------------------------------------
 
 class CausalSelfAttention(nn.Module):
@@ -202,7 +201,6 @@ class GPT(nn.Module):
         return optimizer
 
 # -----------------------------------------------------------------------------
-import tiktoken
 import numpy as np
 
 def load_tokens(filename):
@@ -301,8 +299,8 @@ if torch.cuda.is_available():
 # B = 64 # micro batch size
 # T = 1024 # sequence length
 
-total_batch_size = 2048*8
-B = 4 # micro batch size
+total_batch_size = 2048*16
+B = 2 # micro batch size
 T = 2048 # sequence length
 
 assert total_batch_size % (B * T * ddp_world_size) == 0, "make sure total_batch_size is divisible by B * T * ddp_world_size"
@@ -327,10 +325,10 @@ if ddp:
     model = DDP(model, device_ids=[ddp_local_rank])
 raw_model = model.module if ddp else model # always contains the "raw" unwrapped model
 
-max_lr = 6e-4
+max_lr = 0.0018
 min_lr = max_lr * 0.1
-warmup_steps = 715
 max_steps = 850 # 850 = 10 epochs # 19,073 steps is ~1 epoch, if data is 10B tokens and batch size 0.5M tokens
+warmup_steps = int(max_steps*0.1)
 def get_lr(it):
     # 1) linear warmup for warmup_iters steps
     if it < warmup_steps:
@@ -381,7 +379,7 @@ for step in range(max_steps):
             print(f"validation loss: {val_loss_accum.item():.4f}")
             with open(log_file, "a") as f:
                 f.write(f"{step} val {val_loss_accum.item():.4f}\n")
-            if step > 0 and (step % 5000 == 0 or last_step):
+            if step > 0 and (step % int(max_steps*0.1) == 0 or last_step):
                 # optionally write model checkpoints
                 checkpoint_path = os.path.join(log_dir, f"model_{step:05d}.pt")
                 checkpoint = {
