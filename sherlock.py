@@ -5,6 +5,9 @@ from tqdm import tqdm
 import itertools
 from pathlib import Path
 import os
+from huggingface_hub import snapshot_download
+
+snapshot_download(repo_id="eastwind/tiny-sherlock-audio", local_dir='./tiny-sherlock-audio', repo_type='dataset')
 
 device = "cpu"
 if torch.cuda.is_available():
@@ -25,10 +28,13 @@ seconds_per_batch = 3
 batch_size = 2
 print("batch size:", batch_size)
 
-for audio_path in sorted(os.listdir('./adventures_sherlock_holmes_rg_librivox')):
+data_path = "./tiny-sherlock-audio"
+file_ext = 'mp3'
+
+for audio_path in sorted([x for x in os.listdir(data_path) if file_ext in x]):
     print("processing: ", audio_path)
     waves = []
-    waveform, sample_rate = torchaudio.load(f'./adventures_sherlock_holmes_rg_librivox/{audio_path}', backend='soundfile')
+    waveform, sample_rate = torchaudio.load(f'{data_path}/{audio_path}', backend='soundfile')
 
     # Resample to 24kHz if necessary
     if sample_rate != tokenizer.sample_rate:
