@@ -14,3 +14,4 @@ B = 2 # micro batch size
 T = 2048 # sequence length
 ```
 
+https://github.com/nivibilla/build-nanogpt/blob/audio/samples/gpt2_audio_50k_1.mp4
