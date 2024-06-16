@@ -235,7 +235,7 @@ class DataLoaderLite:
         # state, init at shard zero
         self.current_shard = 0
         self.tokens = load_tokens(self.shards[self.current_shard])
-        self.current_position = self.B * self.T * self.process_rank
+        self.current_position = 0
 
     def next_batch(self):
         B, T = self.B, self.T
