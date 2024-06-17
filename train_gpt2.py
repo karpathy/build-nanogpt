@@ -389,8 +389,8 @@ for step in range(max_steps):
                 x, y = x.to(device), y.to(device)
                 with torch.autocast(device_type=device_type, dtype=torch.bfloat16):
                     logits, loss = model(x, y)
-                loss = loss / val_loss_steps
                 val_loss_accum += loss.detach()
+            val_loss_accum /= val_loss_steps
         if ddp:
             dist.all_reduce(val_loss_accum, op=dist.ReduceOp.AVG)
         if master_process:
