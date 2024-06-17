@@ -40,6 +40,8 @@ Earlier version of PyTorch may have difficulty converting from uint16 to long. I
 
 The `torch.autocast` function takes an arg `device_type`, to which I tried to stubbornly just pass `device` hoping it works ok, but PyTorch actually really wants just the type and creates errors in some version of PyTorch. So we want e.g. the device `cuda:3` to get stripped to `cuda`. Currently, device `mps` (Apple Silicon) would become `device_type` CPU, I'm not 100% sure this is the intended PyTorch way.
 
+Confusingly, `model.require_backward_grad_sync` is actually used by both the forward and backward pass. Moved up the line so that it also gets applied to the forward pass. 
+
 ## Prod
 
 For more production-grade runs that are very similar to nanoGPT, I recommend looking at the following repos:
