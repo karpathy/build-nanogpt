@@ -1,0 +1,6 @@
+requests
+tiktoken
+tqdm
+torch
+transformers
+matplotlib
