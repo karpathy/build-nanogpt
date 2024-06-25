@@ -12,6 +12,7 @@ Hello, I'm a language model, so the next time I go, I'll just say, I like this s
 Hello, I'm a language model, and the question is, what should I do if I want to be a teacher?
 Hello, I'm a language model, and I'm an English person. In languages, "speak" is really speaking. Because for most people, there's
 ```
+ger
 
 And after 40B tokens of training:
 
