@@ -82,4 +82,5 @@ def main():
             filename = os.path.join(DATA_CACHE_DIR, f"edufineweb_{split}_{shard_index:06d}")
             write_datafile(filename, all_tokens_np[:token_count])
 
-main()
+if __name__ == '__main__':
+    main()
